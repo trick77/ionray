@@ -10,7 +10,7 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
   o String ahvn13
   o String vorname
   o String nachname
-  --> Dosimetriestelle dosimetriestelle
+  --> Unternehmen unternehmen
 }
 
 /**
@@ -19,6 +19,7 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
 participant Unternehmen identified by uid { 
   o String uid 
   o String name 
+  --> Dosimetriestelle dosimetriestelle
 }
 
 /**
