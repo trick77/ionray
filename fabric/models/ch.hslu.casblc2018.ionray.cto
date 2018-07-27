@@ -1,7 +1,6 @@
 /**
- * Modelldefinitionen für Projektarbeit HSLU CAS Blockchain 2018
+ * Hyperledger Composer Modelldefinitionen für Projektarbeit HSLU CAS Blockchain 2018.
  */
-
 namespace ch.hslu.casblc2018.ionray
 
 /**
