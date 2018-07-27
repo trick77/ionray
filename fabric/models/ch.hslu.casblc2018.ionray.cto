@@ -10,7 +10,7 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
   o String ahvn13
   o String vorname
   o String nachname
-  --> Unternehmen unternehmen
+  --> Unternehmen aktuellerArbeitgeber
 }
 
 /**
@@ -27,9 +27,12 @@ participant Unternehmen identified by uid { 
  */
 participant Dosimetriestelle identified by bag_id { 
   o String bag_id 
-  o String name 
+  o String name
 }    
 
+/**
+ * Teilnehmer Bundesorgan (BAG, ENSI).
+ */
 participant Bundesorgan identified by name { 
   o String name 
 } 
@@ -45,8 +48,8 @@ enum DosimeterTyp { 
 /**
  * Ein Dosimeter als Asset, welches immer zu einer StrahlenexponiertePerson gehoert.
  */
-asset Dosimeter identified by mac_address { 
-  o String mac_address 
+asset Dosimeter identified by mac_adresse { 
+  o String mac_adresse 
   o DosimeterTyp dosimeter_typ 
   --> StrahlenexponiertePerson person 
 }
