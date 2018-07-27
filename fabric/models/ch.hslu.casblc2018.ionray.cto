@@ -22,7 +22,7 @@ participant Unternehmen identified by uid { 
 }
 
 /**
- * Teilnehmer Personendosimetriestelle (Abgekuerzt als Dosimetriestelle)
+ * Teilnehmer Personendosimetriestelle (Abgekuerzt als Dosimetriestelle).
  */
 participant Dosimetriestelle identified by bag_id { 
   o String bag_id 
@@ -43,7 +43,6 @@ enum DosimeterTyp { 
 asset Dosimeter identified by mac_address { 
   o String mac_address 
   o DosimeterTyp dosimeter_typ 
-  o Messwert[] messwerte optional  
   --> StrahlenexponiertePerson person 
 }
 
@@ -52,6 +51,6 @@ asset Dosimeter identified by mac_address { 
  */
 transaction Messwert {
   o Double dosis
-  o String zeitpunkt
+  o String messZeitpunkt
   --> Dosimeter dosimeter
 }
