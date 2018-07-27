@@ -30,6 +30,10 @@ participant Dosimetriestelle identified by bag_id {
   o String name 
 }    
 
+participant Bundesorgan identified by name { 
+  o String name 
+} 
+
 /**
  * Unterstuetzte Typen von Dosimetern.
  */
