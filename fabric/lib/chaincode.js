@@ -19,8 +19,8 @@ async function dosisMessung(dosis) {  // eslint-disable-line no-unused-vars
 }
 
 /**
- * Fuer Demozwecke benoetigte Participants/Assets initialisieren..
- * @param {org.acme.shipping.perishable.SetupDemo} setupDemo - die SetupDemo Transaktion
+ * Fuer Demozwecke benoetigte Participants/Assets initialisieren.
+ * @param {ch.hslu.casblc2018.ionray.SetupDemo} setupDemo - die SetupDemo Transaktion
  * @transaction
  */
 async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
@@ -28,14 +28,15 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const factory = getFactory();
     const NS = 'ch.hslu.casblc2018.ionray';
 
-    // Die Dosimetriestelle Suva erzeugen 
-    const dosimetrieStelle = factory.newResource(NS, 'DosimetrieStelle', '1-11');
+    // Die Dosimetriestelle Suva erzeugen.
+    const dosimetrieStelleBagId = '1-11';
+    const dosimetrieStelle = factory.newResource(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
     dosimetrieStelle.name = "Suva";
 
     // Ein Unternehmen erzeugen.
     const unternehmen = factory.newResource(NS, 'Unternehmen', '2-22');
     unternehmen.name = 'Kantonsspital Luzern'
-    unternehmen.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', '1-11');
+    unternehmen.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
 
     // Dosimetriestelle dem Ledger hinzufuegen.
     const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
