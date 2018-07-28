@@ -41,20 +41,19 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
 
     // Ein Unternehmen erzeugen und die Dosimetriestelle Suva zuordnen.
     const unternehmen1Id = 'CHE-123.456.789';
-    const unternehmen1 = factory.newResource(NS, 'Unternehmen', unternehmenId);
+    const unternehmen1 = factory.newResource(NS, 'Unternehmen', unternehmen1Id);
     unternehmen1.name = 'Kantonsspital Luzern';
     unternehmen1.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
 
     // Ein weiteres Unternehmen erzeugen und die Dosimetriestelle Suva zuordnen.
     const unternehmen2Id = 'CHE-789.654.321';
-    const unternehmen2 = factory.newResource(NS, 'Unternehmen', unternehmenId);
+    const unternehmen2 = factory.newResource(NS, 'Unternehmen', unternehmen2Id);
     unternehmen2.name = 'Radiologie Luzern AG';
     unternehmen2.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
  
     // Eine strahlenexponierte Person erzeugen und einem Unternehmen zuordnen.
     const ahvn13_1 = '1566523572010';
     const person1 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_1);
-    person1.ahvn13 = ahvn13_1;
     person1.nachname = 'Hörndli';
     person1.vorname = 'Guido';
     person1.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen1Id);
@@ -62,13 +61,12 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     // Eine weitere strahlenexponierte Person erzeugen und einem anderen Unternehmen zuordnen.
     const ahvn13_2 = '2566523572020';
     const person2 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_2);
-    person2.ahvn13 = ahvn13_2;
     person2.nachname = 'Schaufelberger';
     person2.vorname = 'Alois';
     person2.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen2Id);
 
     // Dosimeter erzeugen und einer Person zuordnen
-    const mac_adresse1 = '01:42:4B:B2:DA:01';
+    const mac_adresse1 = '01424BB2DA01';
     const dosimeter1 = factory.newResource(NS, 'Dosimeter', mac_adresse1);
     dosimeter1.dosimeterTyp = 'GANZKOERPER';
     dosimeter1.person = person1;
@@ -92,7 +90,7 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     await personRegistry.addAll([person1, person2]);
 
     // Dosimeter dem Ledger hinzufuegen.
-    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
+    const dosimeterRegistry = await getAssetRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.addAll([dosimeter1, dosimeter2]);
 
 }

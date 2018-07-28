@@ -25,8 +25,8 @@ participant Unternehmen identified by uid { 
 /**
  * Teilnehmer Personendosimetriestelle (Abgekuerzt als DosimetrieStelle).
  */
-participant DosimetrieStelle identified by bag_id { 
-  o String bag_id 
+participant DosimetrieStelle identified by bagId { 
+  o String bagId 
   o String name
 }    
 
@@ -50,7 +50,7 @@ enum DosimeterTyp { 
  */
 asset Dosimeter identified by mac_adresse { 
   o String mac_adresse 
-  o DosimeterTyp dosimeter_typ 
+  o DosimeterTyp dosimeterTyp 
   // dosisMessungen muessen optional sein, das das Dosimeter auf dem Ledger existieren koennen soll bevor es eine erste Dosis gemesssen hat.
   o DosisMessung[] dosisMessungen optional
   --> StrahlenexponiertePerson person
