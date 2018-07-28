@@ -35,14 +35,23 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const NS = 'ch.hslu.casblc2018.ionray';
 
     // Die Dosimetriestelle Suva erzeugen.
-    const dosimetrieStelleBagId = '1-11';
+    const dosimetrieStelleBagId = 'dosi1';
     const dosimetrieStelle = factory.newResource(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
     dosimetrieStelle.name = "Suva";
 
-    // Ein Unternehmen erzeugen.
-    const unternehmen = factory.newResource(NS, 'Unternehmen', '2-22');
-    unternehmen.name = 'Kantonsspital Luzern'
+    // Ein Unternehmen erzeugen und die Dosimetriestelle Suva zuordnen.
+    const unternehmenId = 'CHE-123.456.789';
+    const unternehmen = factory.newResource(NS, 'Unternehmen', unternehmenId);
+    unternehmen.name = 'Kantonsspital Luzern';
     unternehmen.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
+
+    // Eine strahlenexponierte Person erzeugen und einem Unternehmen zuordnen.
+    const ahvn13 = '7566523572040';
+    const person = factory.newResource(NS, 'StrahlenexponiertePerson', avhn13);
+    person.ahvn13 = avhn13;
+    person.name = 'Hörndli';
+    person.vorname = 'Guido';
+    person.unternehmen = factory.newRelationship(NS, 'Unternehmen', unternehmenId);
 
     // Dosimetriestelle dem Ledger hinzufuegen.
     const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
@@ -51,4 +60,9 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     // Unternehmen dem Ledger hinzufuegen.
     const unternehmenRegistry = await getParticipantRegistry(NS + '.Unternehmen');
     await unternehmenRegistry.addAll([unternehmen]);
+
+    // Strahlenexponierte Person dem Ledger hinzufuegen.
+    const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
+    await personRegistry.addAll([person]);
+
 }
