@@ -46,9 +46,9 @@ enum DosimeterTyp { 
 } 
 
 /**
- * Ein Dosimeter als Asset, welches immer zu einer StrahlenexponiertePerson gehoert.
+ * Ein Dosimeter als IoT Device, welches immer zu einer StrahlenexponiertePerson gehoert.
  */
-asset Dosimeter identified by mac_adresse { 
+participant Dosimeter identified by mac_adresse { 
   o String mac_adresse 
   o DosimeterTyp dosimeterTyp 
   // dosisMessungen muessen optional sein, das das Dosimeter auf dem Ledger existieren koennen soll bevor es eine erste Dosis gemesssen hat.
