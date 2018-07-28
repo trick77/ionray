@@ -49,9 +49,9 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const ahvn13 = '7566523572040';
     const person = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13);
     person.ahvn13 = ahvn13;
-    person.name = 'Hörndli';
+    person.nachname = 'Hörndli';
     person.vorname = 'Guido';
-    person.unternehmen = factory.newRelationship(NS, 'Unternehmen', unternehmenId);
+    person.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmenId);
 
     // Dosimetriestelle dem Ledger hinzufuegen.
     const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
