@@ -1,3 +1,5 @@
+
+
 rule NetworkAdminUser {
     description: "Grant business network administrators full access to user resources"
     participant: "org.hyperledger.composer.system.NetworkAdmin"
@@ -11,5 +13,66 @@ rule NetworkAdminSystem {
     participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
     resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule BundesorganLesend {
+    description: "Bedingungsloser Lesezugriff für Bundesorgane."
+    participant: "ch.hslu.casblc2018.ionray.Bundesorgan"
+    operation: READ
+    resource: "ch.hslu.casblc2018.ionray.*"
+    action: ALLOW
+}
+
+rule BundesorganGenehmigend {
+    description: "Nur das BAG/ENSI duerfen neue Dosimetriestellen genehmigen."
+    participant(p): "ch.hslu.casblc2018.ionray.Bundesorgan"
+    operation: CREATE, UPDATE
+    resource(r): "ch.hslu.casblc2018.ionray.DosimetrieStelle"
+    condition: (p.name === "BAG" || p.name === "ENSI")
+    action: ALLOW
+}
+
+rule StrahlenexponiertePersonLesend {
+    description: "Lesezugriff für strahlenexponierte Personen für deren eigene Dosimeter."
+    participant(p): "ch.hslu.casblc2018.ionray.StrahlenexponiertePerson"
+    operation: READ
+    resource(r): "ch.hslu.casblc2018.ionray.Dosimeter"
+    condition: (r.person.ahvn13 === p.ahvn13)
+    action: ALLOW
+}
+
+rule UnternehmenLesend {
+    description: "Lesezugriff für Unternehmen für deren Arbeitnehmende."
+    participant(p): "ch.hslu.casblc2018.ionray.Unternehmen"
+    operation: READ
+    resource(r): "ch.hslu.casblc2018.ionray.Dosimeter"
+    condition: (r.person.aktuellerArbeitgeber.uid === p.uid)
+    action: ALLOW
+}
+
+rule DosimetriestelleUnternehmen {
+    description: "Voller Zugriff von Dosimetriestellen auf deren angeschlossene Unternehmen."
+    participant(p): "ch.hslu.casblc2018.ionray.DosimetrieStelle"
+    operation: CREATE, READ, UPDATE
+    resource(r): "ch.hslu.casblc2018.ionray.Unternehmen"
+    condition: (r.dosimetrieStelle.bagId === p.bagId)
+    action: ALLOW
+}
+
+rule DosimetriestellePerson {
+    description: "Voller Zugriff von Dosimetriestellen auf Personen von angeschlossenen Unternehmen."
+    participant(p): "ch.hslu.casblc2018.ionray.DosimetrieStelle"
+    operation: CREATE, READ, UPDATE
+    resource(r): "ch.hslu.casblc2018.ionray.StrahlenexponiertePerson"
+    condition: (r.aktuellerArbeitgeber.dosimetriestelle.bagId === p.bagId)
+    action: ALLOW
+}
+
+rule DosimeterSchreibend {
+    description: "Schreibzugriff für Dosimeter IoT Devices."
+    participant: "ch.hslu.casblc2018.ionray.Dosimeter"
+    operation: CREATE, UPDATE
+    resource: "ch.hslu.casblc2018.ionray.Dosimeter"
     action: ALLOW
 }

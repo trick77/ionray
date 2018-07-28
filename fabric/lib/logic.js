@@ -2,6 +2,8 @@
  * Hyperledger Composer Chaincode für Projektarbeit HSLU CAS Blockchain 2018.
  */
 
+const NS = 'ch.hslu.casblc2018.ionray';
+
 /**
  * Eine Dosis von einem Dosimeter erhalten.
  * @param {ch.hslu.casblc2018.ionray.DosisMessung} dosisMessung - die DosisMessung Transaktion
@@ -11,7 +13,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
 
     const dosimeter = dosisMessung.dosimeter;
 
-    console.log('Dosis ' + dosisMessung.dosis + ' wird dem Dosimeter ' + dosismeter.$identifier + ' hinzufuegt!');
+    console.log('Dosis ' + dosisMessung.dosis + ' wird dem Dosimeter ' + dosimeter.$identifier + ' hinzufuegt!');
 
     if (dosimeter.dosisMessungen) {
         dosimeter.dosisMessungen.push(dosisMessung);
@@ -20,7 +22,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     }
 
     // Dosismessung dem Dosimeter hinzufuegen.
-    const dosimeterRegistry = await getAssetRegistry('ch.hslu.casblc1028.ionray.Dosimeter');
+    const dosimeterRegistry = await getAssetRegistry(NS);
     await dosimeterRegistry.update(dosimeter);
 }
 
@@ -35,7 +37,7 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const NS = 'ch.hslu.casblc2018.ionray';
 
     // Die Dosimetriestelle Suva erzeugen.
-    const dosimetrieStelleBagId = 'dosi1';
+    const dosimetrieStelleBagId = 'suva';
     const dosimetrieStelle = factory.newResource(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
     dosimetrieStelle.name = "Suva";
 
@@ -62,11 +64,11 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const ahvn13_2 = '2566523572020';
     const person2 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_2);
     person2.nachname = 'Schaufelberger';
-    person2.vorname = 'Alois';
+    person2.vorname = 'Heinrich';
     person2.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen2Id);
 
     // Dosimeter erzeugen und einer Person zuordnen
-    const mac_adresse1 = '01424BB2DA01';
+    const mac_adresse1 = '01:42:4B:B2:DA:01';
     const dosimeter1 = factory.newResource(NS, 'Dosimeter', mac_adresse1);
     dosimeter1.dosimeterTyp = 'GANZKOERPER';
     dosimeter1.person = person1;
@@ -90,7 +92,7 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     await personRegistry.addAll([person1, person2]);
 
     // Dosimeter dem Ledger hinzufuegen.
-    const dosimeterRegistry = await getAssetRegistry(NS + '.Dosimeter');
+    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.addAll([dosimeter1, dosimeter2]);
 
 }

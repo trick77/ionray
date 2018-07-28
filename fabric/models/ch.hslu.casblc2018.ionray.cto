@@ -61,7 +61,7 @@ asset Dosimeter identified by mac_adresse { 
  */
 transaction DosisMessung {
   o Double dosis
-  o String messZeitpunkt
+  o DateTime messZeitpunkt
   --> Dosimeter dosimeter
 }
 
