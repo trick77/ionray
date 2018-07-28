@@ -40,29 +40,59 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     dosimetrieStelle.name = "Suva";
 
     // Ein Unternehmen erzeugen und die Dosimetriestelle Suva zuordnen.
-    const unternehmenId = 'CHE-123.456.789';
-    const unternehmen = factory.newResource(NS, 'Unternehmen', unternehmenId);
-    unternehmen.name = 'Kantonsspital Luzern';
-    unternehmen.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
+    const unternehmen1Id = 'CHE-123.456.789';
+    const unternehmen1 = factory.newResource(NS, 'Unternehmen', unternehmenId);
+    unternehmen1.name = 'Kantonsspital Luzern';
+    unternehmen1.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
 
+    // Ein weiteres Unternehmen erzeugen und die Dosimetriestelle Suva zuordnen.
+    const unternehmen2Id = 'CHE-789.654.321';
+    const unternehmen2 = factory.newResource(NS, 'Unternehmen', unternehmenId);
+    unternehmen2.name = 'Radiologie Luzern AG';
+    unternehmen2.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', dosimetrieStelleBagId);
+ 
     // Eine strahlenexponierte Person erzeugen und einem Unternehmen zuordnen.
-    const ahvn13 = '7566523572040';
-    const person = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13);
-    person.ahvn13 = ahvn13;
-    person.nachname = 'Hörndli';
-    person.vorname = 'Guido';
-    person.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmenId);
+    const ahvn13_1 = '1566523572010';
+    const person1 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_1);
+    person1.ahvn13 = ahvn13_1;
+    person1.nachname = 'Hörndli';
+    person1.vorname = 'Guido';
+    person1.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen1Id);
 
+    // Eine weitere strahlenexponierte Person erzeugen und einem anderen Unternehmen zuordnen.
+    const ahvn13_2 = '2566523572020';
+    const person2 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_2);
+    person2.ahvn13 = ahvn13_2;
+    person2.nachname = 'Schaufelberger';
+    person2.vorname = 'Alois';
+    person2.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen2Id);
+
+    // Dosimeter erzeugen und einer Person zuordnen
+    const mac_adresse1 = '01:42:4B:B2:DA:01';
+    const dosimeter1 = factory.newResource(NS, 'Dosimeter', mac_adresse1);
+    dosimeter1.dosimeterTyp = 'GANZKOERPER';
+    dosimeter1.person = person1;
+
+    // Dosimeter erzeugen und einer Person zuordnen
+    const mac_adresse2 = '02:42:4B:B2:DA:02';
+    const dosimeter2 = factory.newResource(NS, 'Dosimeter', mac_adresse2);
+    dosimeter2.dosimeterTyp = 'GANZKOERPER';
+    dosimeter2.person = person2;
+ 
     // Dosimetriestelle dem Ledger hinzufuegen.
     const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
     await dosimetrieStelleRegistry.addAll([dosimetrieStelle]);
 
     // Unternehmen dem Ledger hinzufuegen.
     const unternehmenRegistry = await getParticipantRegistry(NS + '.Unternehmen');
-    await unternehmenRegistry.addAll([unternehmen]);
+    await unternehmenRegistry.addAll([unternehmen1, unternehmen2]);
 
-    // Strahlenexponierte Person dem Ledger hinzufuegen.
+    // Strahlenexponierte Personen dem Ledger hinzufuegen.
     const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
-    await personRegistry.addAll([person]);
+    await personRegistry.addAll([person1, person2]);
+
+    // Dosimeter dem Ledger hinzufuegen.
+    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
+    await dosimeterRegistry.addAll([dosimeter1, dosimeter2]);
 
 }
