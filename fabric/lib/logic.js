@@ -22,7 +22,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     }
 
     // Dosismessung dem Dosimeter hinzufuegen.
-    const dosimeterRegistry = await getAssetRegistry(NS);
+    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.update(dosimeter);
 }
 
