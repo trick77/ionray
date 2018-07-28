@@ -51,14 +51,22 @@ enum DosimeterTyp { 
 asset Dosimeter identified by mac_adresse { 
   o String mac_adresse 
   o DosimeterTyp dosimeter_typ 
-  --> StrahlenexponiertePerson person 
+  // dosisMessungen muessen optional sein, das das Dosimeter auf dem Ledger existieren koennen soll bevor es eine erste Dosis gemesssen hat.
+  o DosisMessung[] dosisMessungen optional
+  --> StrahlenexponiertePerson person
 }
 
 /**
  * Gelesener Messwert als Transaktion.
  */
-transaction Messwert {
+transaction DosisMessung {
   o Double dosis
   o String messZeitpunkt
   --> Dosimeter dosimeter
+}
+
+/**
+ * Nur fuer Demonstrationszwecke.
+ */
+transaction SetupDemo {
 }

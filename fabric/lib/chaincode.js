@@ -4,18 +4,24 @@
 
 /**
  * Eine Dosis von einem Dosimeter erhalten.
- * @param {ch.hslu.casblc2018.ionray.DosisReading} dosisMessung - die DosisMessung Transaktion
+ * @param {ch.hslu.casblc2018.ionray.dosisMessung} dosisMessung - die DosisMessung Transaktion
  * @transaction
  */
-async function dosisMessung(dosis) {  // eslint-disable-line no-unused-vars
+async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-vars
 
-    const shipment = temperatureReading.shipment;
+    const dosimeter = dosisMessung.dosimeter;
 
-    console.log('Dosis hinzufuegen ' + dosis + ' zum Dosimeter ' + dosis);
+    console.log('Dosis ' + dosisMessung.dosis + ' wird dem Dosimeter ' + dosismeter.$identifier + ' hinzufuegt!');
 
-    // Dosismessing dem Dosimeter hinzufuegen.
+    if (dosimeter.dosisMessungen) {
+        dosimeter.dosisMessungen.push(dosisMessung);
+    } else {
+        dosimeter.dosisMessungen = [dosisMessung];
+    }
+
+    // Dosismessung dem Dosimeter hinzufuegen.
     const dosimeterRegistry = await getAssetRegistry('ch.hslu.casblc1028.ionray.Dosimeter');
-    await dosimeterRegistry.update(dosis);
+    await dosimeterRegistry.update(dosimeter);
 }
 
 /**
