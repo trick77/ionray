@@ -19,13 +19,13 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
 participant Unternehmen identified by uid { 
   o String uid 
   o String name 
-  --> Dosimetriestelle dosimetriestelle
+  --> DosimetrieStelle dosimetrieStelle
 }
 
 /**
- * Teilnehmer Personendosimetriestelle (Abgekuerzt als Dosimetriestelle).
+ * Teilnehmer Personendosimetriestelle (Abgekuerzt als DosimetrieStelle).
  */
-participant Dosimetriestelle identified by bag_id { 
+participant DosimetrieStelle identified by bag_id { 
   o String bag_id 
   o String name
 }    
