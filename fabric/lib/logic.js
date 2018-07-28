@@ -47,8 +47,8 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
 
     // Eine strahlenexponierte Person erzeugen und einem Unternehmen zuordnen.
     const ahvn13 = '7566523572040';
-    const person = factory.newResource(NS, 'StrahlenexponiertePerson', avhn13);
-    person.ahvn13 = avhn13;
+    const person = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13);
+    person.ahvn13 = ahvn13;
     person.name = 'Hörndli';
     person.vorname = 'Guido';
     person.unternehmen = factory.newRelationship(NS, 'Unternehmen', unternehmenId);
