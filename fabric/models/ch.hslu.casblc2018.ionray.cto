@@ -41,8 +41,8 @@ participant Bundesorgan identified by name {
  * Unterstuetzte Typen von Dosimetern.
  */
 enum DosimeterTyp { 
-  o EXTREMITAET 
-  o GANZKOERPER 
+  o GANZKOERPER
+  o EXTREMITAET
 } 
 
 /**

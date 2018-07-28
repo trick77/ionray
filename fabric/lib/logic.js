@@ -4,7 +4,7 @@
 
 /**
  * Eine Dosis von einem Dosimeter erhalten.
- * @param {ch.hslu.casblc2018.ionray.dosisMessung} dosisMessung - die DosisMessung Transaktion
+ * @param {ch.hslu.casblc2018.ionray.DosisMessung} dosisMessung - die DosisMessung Transaktion
  * @transaction
  */
 async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-vars
