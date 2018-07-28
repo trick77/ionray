@@ -1,4 +1,8 @@
 /**
+ * Hyperledger Composer Chaincode für Projektarbeit HSLU CAS Blockchain 2018.
+ */
+
+/**
  * Eine Dosis von einem Dosimeter erhalten.
  * @param {ch.hslu.casblc2018.ionray.DosisReading} dosisMessung - die DosisMessung Transaktion
  * @transaction
@@ -34,10 +38,10 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     unternehmen.dosimetrieStelle = factory.newRelationship(NS, 'DosimetrieStelle', '1-11');
 
     // Dosimetriestelle dem Ledger hinzufuegen.
-    const growerRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
-    await growerRegistry.addAll([dosimetrieStelle]);
+    const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
+    await dosimetrieStelleRegistry.addAll([dosimetrieStelle]);
 
     // Unternehmen dem Ledger hinzufuegen.
-    const importerRegistry = await getParticipantRegistry(NS + '.Unternehmen');
-    await importerRegistry.addAll([unternehmen]);
+    const unternehmenRegistry = await getParticipantRegistry(NS + '.Unternehmen');
+    await unternehmenRegistry.addAll([unternehmen]);
 }
