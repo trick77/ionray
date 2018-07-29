@@ -24,8 +24,30 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
         dosimeter.dosisMessungen = [dosisMessung];
     }
 
-    let found = 0;
     const person = dosisMessung.dosimeter.person;
+
+    // JahresDosis aktualisieren
+    let foundJahresDosis = 0;
+    const currentYear = new Date(dosisMessung.messZeitpunkt).getFullYear();
+    if (person.jahresDosis) {
+        person.jahresDosis.forEach(function(jahresDosis) {
+            if (jahresDosis.jahr == currentYear) {
+                jahresDosis.dosis += dosisMessung.dosis;
+                foundJahresDosis = 1;
+            }
+        });
+    }
+    if (foundJahresDosis === 0) {
+        console.log('Bisher unbekanntes Jahr, erstelle neue JahresDosis');
+        const jahresDosis = factory.newConcept(NS, 'JahresDosis');
+        jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
+        jahresDosis.dosis = dosisMessung.dosis;
+        jahresDosis.jahr = currentYear;
+        person.jahresDosis = [jahresDosis];
+    } 
+
+    // LebensDosis aktualisieren
+    let foundLebensDosis = 0;
     if (person.lebensDosis) {
         // Suchen, ob es den DosimeterTyp bereits einmal gibt.
  		person.lebensDosis.forEach(function(lebensDosis) {
@@ -33,11 +55,11 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
                 console.log('Aktualisiere bestehende LebensDosis.');
                 // Addere aktuelle Dosis der bestehenden/passenden LebensDosis
                 lebensDosis.dosis += dosisMessung.dosis;
-                found = 1;
+                foundLebensDosis = 1;
             }
         });
     }
-    if (found === 0) {
+    if (foundLebensDosis === 0) {
         console.log('Bestehende/passende LebensDosis nicht gefunden, erstelle neuen Eintrag.');
         const lebensDosis = factory.newConcept(NS, 'LebensDosis');
         lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;

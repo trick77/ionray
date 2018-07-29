@@ -3,14 +3,23 @@
  */
 namespace ch.hslu.casblc2018.ionray
 
+/**
+ * Unterstuetzte Typen von Dosimetern.
+ */
+enum DosimeterTyp { 
+  o GANZKOERPER
+  o EXTREMITAET
+} 
+
 concept LebensDosis {
   o DosimeterTyp dosimeterTyp
-  o Double dosis
+  o Double dosis range=[0.0, ]
 }
 
 concept JahresDosis {
   o DosimeterTyp dosimeterTyp
-  o Double dosis
+  o Double dosis range=[0.0, ]
+  o Integer jahr range=[2018, ]
 }
 
 /**
@@ -53,14 +62,6 @@ participant Bundesorgan identified by kurzname {
 } 
 
 /**
- * Unterstuetzte Typen von Dosimetern.
- */
-enum DosimeterTyp { 
-  o GANZKOERPER
-  o EXTREMITAET
-} 
-
-/**
  * Ein Dosimeter als IoT Device, welches immer zu einer StrahlenexponiertePerson gehoert.
  */
 participant Dosimeter identified by mac_adresse { 
@@ -75,7 +76,7 @@ participant Dosimeter identified by mac_adresse { 
  * Gelesener Messwert als Transaktion.
  */
 transaction DosisMessung {
-  o Double dosis
+  o Double dosis range=[0.0,]
   o DateTime messZeitpunkt
   --> Dosimeter dosimeter
 }
