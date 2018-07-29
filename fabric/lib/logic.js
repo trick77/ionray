@@ -24,26 +24,21 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
         dosimeter.dosisMessungen = [dosisMessung];
     }
 
+    let found = 0;
     const person = dosisMessung.dosimeter.person;
     if (person.lebensDosis) {
-        let found = 0;
         // Suchen, ob es den DosimeterTyp bereits einmal gibt.
  		person.lebensDosis.forEach(function(lebensDosis) {
             if (lebensDosis.dosimeterTyp == dosimeter.dosimeterTyp) { 
                 console.log('Aktualisiere bestehende LebensDosis.');
+                // Addere aktuelle Dosis der bestehenden/passenden LebensDosis
                 lebensDosis.dosis += dosisMessung.dosis;
                 found = 1;
             }
         });
-        if (found === 0) {
-            console.log('Passende LebensDosis nicht gefunden, erstelle neuen Eintrag.');
-            const lebensDosis = factory.newConcept(NS, 'LebensDosis');
-            lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
-            lebensDosis.dosis = dosisMessung.dosis;
-            person.lebensDosis = [lebensDosis];    
-        }
-    } else {
-        console.log('LebensDosis fuer Person wird initialisiert.');
+    }
+    if (found === 0) {
+        console.log('Bestehende/passende LebensDosis nicht gefunden, erstelle neuen Eintrag.');
         const lebensDosis = factory.newConcept(NS, 'LebensDosis');
         lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
         lebensDosis.dosis = dosisMessung.dosis;
