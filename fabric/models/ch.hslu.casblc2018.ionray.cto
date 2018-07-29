@@ -88,5 +88,5 @@ transaction SetupDemo {
 }
 
 event NeueDosisMessung {
-  o DosisMessung DosisMessung
+  o DosisMessung dosisMessung
 }

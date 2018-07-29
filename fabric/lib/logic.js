@@ -85,7 +85,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
 
     // Für jede neue Messung einen Event emitten
     const event = getFactory().newEvent(NS, 'NeueDosisMessung');
-    event.dosisMessing = dosisMessung;
+    event.dosisMessung = dosisMessung;
     emit(event);
 }
 
