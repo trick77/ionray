@@ -2,9 +2,10 @@
   "engines": {
     "composer": "^0.19.12"
   },
-  "name": "ionray",
-  "version": "0.0.1",
+  "name": "ionray-network",
+  "version": "1.0.0",
   "description": "ionray",
+  "networkImage": "https://github.com/trick77/ionray/blob/master/fabric/networkimage.svg",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/ionray.bna",
     "pretest": "npm run lint",
