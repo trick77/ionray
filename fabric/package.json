@@ -6,6 +6,7 @@
   "version": "1.0.0",
   "description": "ionray Business Netzwerk",
   "networkImage": "https://raw.githubusercontent.com/trick77/ionray/master/fabric/networkimage.svg",
+  "networkImageanimated": "https://raw.githubusercontent.com/trick77/ionray/master/fabric/networkimage.svg",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/ionray.bna",
     "pretest": "npm run lint",
