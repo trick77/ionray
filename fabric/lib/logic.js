@@ -22,19 +22,23 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
         dosimeter.dosisMessungen = [dosisMessung];
     }
 
-    // Dosismessung dem Dosimeter hinzufuegen.
-    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
-    await dosimeterRegistry.update(dosimeter);
-
     const person = dosisMessung.dosimeter.person;
     if (person.lebensDosis) {
 
     } else {
         const lebensDosis = factory.newConcept(NS, 'LebensDosis');
         lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
-        lebensDosis.dosis += dosimeter.dosis;
+        lebensDosis.dosis += dosisMessung.dosis;
         person.lebensDosis = [lebensDosis];
     }
+
+    // Dosismessung dem Dosimeter hinzufuegen.
+    const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
+    await dosimeterRegistry.update(dosimeter);
+
+    // LebensDosis aktualisieren
+    const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
+    await personRegistry.update(person);
 
 }
 
