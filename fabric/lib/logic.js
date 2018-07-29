@@ -34,7 +34,6 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
 async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
 
     const factory = getFactory();
-    const NS = 'ch.hslu.casblc2018.ionray';
 
     // Die Dosimetriestelle Suva erzeugen.
     const dosimetrieStelleBagId = 'suva';
@@ -56,15 +55,15 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     // Eine strahlenexponierte Person erzeugen und einem Unternehmen zuordnen.
     const ahvn13_1 = '1566523572010';
     const person1 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_1);
-    person1.nachname = 'Hörndli';
-    person1.vorname = 'Guido';
+    person1.nachname = 'Muster';
+    person1.vorname = 'Adelheid';
     person1.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen1Id);
 
     // Eine weitere strahlenexponierte Person erzeugen und einem anderen Unternehmen zuordnen.
     const ahvn13_2 = '2566523572020';
     const person2 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_2);
-    person2.nachname = 'Schaufelberger';
-    person2.vorname = 'Heinrich';
+    person2.nachname = 'Hörndli';
+    person2.vorname = 'Guido';
     person2.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen2Id);
 
     // Dosimeter erzeugen und einer Person zuordnen
@@ -78,6 +77,13 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const dosimeter2 = factory.newResource(NS, 'Dosimeter', mac_adresse2);
     dosimeter2.dosimeterTyp = 'GANZKOERPER';
     dosimeter2.person = person2;
+
+    // Bundesorgane erzeugen
+    const organ1 = factory.newResource(NS, 'Bundesorgan', 'BAG');
+    organ1.name = 'Bundesamt für Gesundheit';
+    
+    const organ2 = factory.newResource(NS, 'Bundesorgan', 'ENSI');
+    organ2.name = 'Eidgenössisches Nuklearsicherheitsinspektorat';
  
     // Dosimetriestelle dem Ledger hinzufuegen.
     const dosimetrieStelleRegistry = await getParticipantRegistry(NS + '.DosimetrieStelle');
@@ -94,5 +100,9 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     // Dosimeter dem Ledger hinzufuegen.
     const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.addAll([dosimeter1, dosimeter2]);
+
+    // Bundesorgane dem Ledger hinzufuegen.
+    const organRegistry = await getParticipantRegistry(NS + '.Bundesorgan');
+    await organRegistry.addAll([organ1, organ2]);
 
 }

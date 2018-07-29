@@ -33,8 +33,9 @@ participant DosimetrieStelle identified by bagId {
 /**
  * Teilnehmer Bundesorgan (BAG, ENSI).
  */
-participant Bundesorgan identified by name { 
-  o String name 
+participant Bundesorgan identified by kurzname { 
+  o String kurzname
+  o String name
 } 
 
 /**

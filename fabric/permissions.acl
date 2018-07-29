@@ -29,7 +29,7 @@ rule BundesorganGenehmigend {
     participant(p): "ch.hslu.casblc2018.ionray.Bundesorgan"
     operation: CREATE, UPDATE
     resource(r): "ch.hslu.casblc2018.ionray.DosimetrieStelle"
-    condition: (p.name === "BAG" || p.name === "ENSI")
+    condition: (p.kurzname === "BAG" || p.kurzname === "ENSI")
     action: ALLOW
 }
 
