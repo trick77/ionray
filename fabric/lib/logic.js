@@ -75,7 +75,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
         person.lebensDosis = [lebensDosis];
     }
 
-    // Person bzw. LebensDosis aktualisieren.
+    // Person bzw. LebensDosis/JahresDosis aktualisieren.
     const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
     await personRegistry.update(person)
 
