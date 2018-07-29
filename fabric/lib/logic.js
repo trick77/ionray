@@ -1,5 +1,5 @@
 /**
- * Hyperledger Composer Chaincode für Projektarbeit HSLU CAS Blockchain 2018.
+ * Hyperledger Composer Transaktonslogik für Projektarbeit HSLU CAS Blockchain 2018.
  */
 
 const NS = 'ch.hslu.casblc2018.ionray';
@@ -11,6 +11,7 @@ const NS = 'ch.hslu.casblc2018.ionray';
  */
 async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-vars
 
+    const factory = getFactory();
     const dosimeter = dosisMessung.dosimeter;
 
     console.log('Dosis ' + dosisMessung.dosis + ' wird dem Dosimeter ' + dosimeter.$identifier + ' hinzufuegt!');
@@ -24,6 +25,17 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     // Dosismessung dem Dosimeter hinzufuegen.
     const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.update(dosimeter);
+
+    const person = dosisMessung.dosimeter.person;
+    if (person.lebensDosis) {
+
+    } else {
+        const lebensDosis = factory.newConcept(NS, 'LebensDosis');
+        lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
+        lebensDosis.dosis += dosimeter.dosis;
+        person.lebensDosis = [lebensDosis];
+    }
+
 }
 
 /**
