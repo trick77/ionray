@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 #
 # Deployt initial das BNA (Business Network Archive) in Hyperledger Fabric.
 #
