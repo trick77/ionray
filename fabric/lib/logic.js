@@ -27,18 +27,26 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     const person = dosisMessung.dosimeter.person;
 
     // JahresDosis aktualisieren
-    let foundJahresDosis = 0;
     const currentYear = new Date(dosisMessung.messZeitpunkt).getFullYear();
     if (person.jahresDosis) {
+        let foundJahresDosis = 0;
         person.jahresDosis.forEach(function(jahresDosis) {
-            if (jahresDosis.jahr == currentYear) {
+            if (jahresDosis.jahr == currentYear && jahresDosis.dosimeterTyp == dosimeter.dosimeterTyp) {
+                console.log('Aktualisiere bestehende Jahresdosis für Jahr ' + currentYear);
                 jahresDosis.dosis += dosisMessung.dosis;
                 foundJahresDosis = 1;
             }
         });
-    }
-    if (foundJahresDosis === 0) {
-        console.log('Bisher unbekanntes Jahr, erstelle neue JahresDosis');
+        if (foundJahresDosis === 0) {
+            console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
+            const jahresDosis = factory.newConcept(NS, 'JahresDosis');
+            jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
+            jahresDosis.dosis = dosisMessung.dosis;
+            jahresDosis.jahr = currentYear;
+            person.jahresDosis.push(jahresDosis);    
+        }
+    } else {
+        console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
         const jahresDosis = factory.newConcept(NS, 'JahresDosis');
         jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
         jahresDosis.dosis = dosisMessung.dosis;
@@ -74,6 +82,11 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     // Dosismessung dem Dosimeter hinzufuegen.
     const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.update(dosimeter);
+
+    // Für jede neue Messung einen Event emitten
+    const event = getFactory().newEvent(NS, 'NeueDosisMessung');
+    event.dosisMessing = dosisMessung;
+    emit(event);
 }
 
 /**

@@ -86,3 +86,7 @@ transaction DosisMessung {
  */
 transaction SetupDemo {
 }
+
+event NeueDosisMessung {
+  o DosisMessung DosisMessung
+}
