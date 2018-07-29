@@ -8,6 +8,11 @@ concept LebensDosis {
   o Double dosis
 }
 
+concept JahresDosis {
+  o DosimeterTyp dosimeterTyp
+  o Double dosis
+}
+
 /**
  * Die strahlenexponierte Person.
  */
@@ -17,6 +22,8 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
   o String nachname
   // Lebensdosis nach Dosimeter-Typ unterschieden.
   o LebensDosis[] lebensDosis optional
+  // JahresDosis nach Dosimeter-Typ unterschieden.
+  o JahresDosis[] jahresDosis optional
   --> Unternehmen aktuellerArbeitgeber
 }
 
