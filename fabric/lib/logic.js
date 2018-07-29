@@ -26,16 +26,33 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
 
     const person = dosisMessung.dosimeter.person;
     if (person.lebensDosis) {
-
+        let found = 0;
+        // Suchen, ob es den DosimeterTyp bereits einmal gibt.
+ 		person.lebensDosis.forEach(function(lebensDosis) {
+            if (lebensDosis.dosimeterTyp == dosimeter.dosimeterTyp) { 
+                console.log('Aktualisiere bestehende LebensDosis.');
+                lebensDosis.dosis += dosisMessung.dosis;
+                found = 1;
+            }
+        });
+        if (found === 0) {
+            console.log('Passende LebensDosis nicht gefunden, erstelle neuen Eintrag.');
+            const lebensDosis = factory.newConcept(NS, 'LebensDosis');
+            lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
+            lebensDosis.dosis = dosisMessung.dosis;
+            person.lebensDosis = [lebensDosis];    
+        }
     } else {
+        console.log('LebensDosis fuer Person wird initialisiert.');
         const lebensDosis = factory.newConcept(NS, 'LebensDosis');
         lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
         lebensDosis.dosis = dosisMessung.dosis;
         person.lebensDosis = [lebensDosis];
-        
-        const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
-        await personRegistry.update(person);
     }
+
+    // Person bzw. LebensDosis aktualisieren.
+    const personRegistry = await getParticipantRegistry(NS + '.StrahlenexponiertePerson');
+    await personRegistry.update(person)
 
     // Dosismessung dem Dosimeter hinzufuegen.
     const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
