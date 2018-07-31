@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 #
 # Setzt das ionray-network zurück, also löscht alle Entitäten/Transaktionen darin.
 #
@@ -8,4 +8,5 @@ composer network reset -c admin@ionray-network
 ../../fabric/fabric-tools/teardownFabric.sh
 docker system prune -f
 rm ./admin@ionray-network.card
+docker rmi $(docker images |grep 'example')
 ../../fabric/fabric-tools/startFabric.sh
