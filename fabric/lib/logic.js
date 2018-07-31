@@ -117,6 +117,11 @@ function checkStrahlenEreignis(person, dosimeter, jahresDosis) {
             return true;
         }
     }
+    if (dosimeter.dosimeterTyp == 'EXTREMITAET') {
+        if (jahresDosis > 500.0) {
+            return true;
+        }
+    }
     return false;
 }
 
