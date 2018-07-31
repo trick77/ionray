@@ -32,7 +32,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     if (person.jahresDosis) {
         let foundJahresDosis = false;
         person.jahresDosis.forEach(function(jahresDosis) {
-            if (jahresDosis.jahr == currentYear && jahresDosis.dosimeterTyp == dosimeter.dosimeterTyp) {
+            if (jahresDosis.jahr == aktuellesJahr && jahresDosis.dosimeterTyp == dosimeter.dosimeterTyp) {
                 console.log('Aktualisiere bestehende Jahresdosis für Jahr ' + aktuellesJahr);
                 jahresDosis.dosis += dosisMessung.dosis;
                 isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis, aktuellesJahr);
