@@ -36,7 +36,7 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const person1 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_1);
     person1.nachname = 'Muster';
     person1.vorname = 'Adelheid';
-    person1.jahrgang = 2001;
+    person1.geburtsjahr = 2001;
     person1.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen1Id);
 
     // Eine weitere strahlenexponierte Person erzeugen und einem anderen Unternehmen zuordnen.
@@ -44,7 +44,7 @@ async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
     const person2 = factory.newResource(NS, 'StrahlenexponiertePerson', ahvn13_2);
     person2.nachname = 'Hörndli';
     person2.vorname = 'Guido';
-    person2.jahrgang = 1966;
+    person2.geburtsjahr = 1966;
     person2.aktuellerArbeitgeber = factory.newRelationship(NS, 'Unternehmen', unternehmen2Id);
 
     // Dosimeter erzeugen und einer Person zuordnen
