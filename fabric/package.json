@@ -3,7 +3,7 @@
     "composer": "^0.19.12"
   },
   "name": "ionray-network",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ionray Business Netzwerk",
   "networkImage": "https://cdn.rawgit.com/trick77/ionray/master/fabric/networkimage.svg",
   "networkImageanimated": "https://cdn.rawgit.com/trick77/ionray/master/fabric/networkimage.svg",
