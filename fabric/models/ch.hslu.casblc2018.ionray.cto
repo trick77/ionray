@@ -19,7 +19,7 @@ concept LebensDosis {
 concept JahresDosis {
   o DosimeterTyp dosimeterTyp
   o Double dosis range=[0.0, ]
-  o Integer jahr range=[2018, ]
+  o Integer jahr range=[1918, ]
 }
 
 /**
