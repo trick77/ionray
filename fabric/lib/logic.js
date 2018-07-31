@@ -15,6 +15,7 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
 
     const factory = getFactory();
     const dosimeter = dosisMessung.dosimeter;
+    let isStrahlenEreignis = false;
 
     console.log('Dosis ' + dosisMessung.dosis + ' wird dem Dosimeter ' + dosimeter.$identifier + ' hinzufuegt!');
 
@@ -29,21 +30,23 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     // JahresDosis aktualisieren
     const currentYear = new Date(dosisMessung.messZeitpunkt).getFullYear();
     if (person.jahresDosis) {
-        let foundJahresDosis = 0;
+        let foundJahresDosis = false;
         person.jahresDosis.forEach(function(jahresDosis) {
             if (jahresDosis.jahr == currentYear && jahresDosis.dosimeterTyp == dosimeter.dosimeterTyp) {
                 console.log('Aktualisiere bestehende Jahresdosis für Jahr ' + currentYear);
                 jahresDosis.dosis += dosisMessung.dosis;
-                foundJahresDosis = 1;
+                isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
+                foundJahresDosis = true;
             }
         });
-        if (foundJahresDosis === 0) {
+        if (!foundJahresDosis) {
             console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
             const jahresDosis = factory.newConcept(NS, 'JahresDosis');
             jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
             jahresDosis.dosis = dosisMessung.dosis;
             jahresDosis.jahr = currentYear;
             person.jahresDosis.push(jahresDosis);    
+            isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
         }
     } else {
         console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
@@ -52,10 +55,11 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
         jahresDosis.dosis = dosisMessung.dosis;
         jahresDosis.jahr = currentYear;
         person.jahresDosis = [jahresDosis];
+        isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
     } 
 
     // LebensDosis aktualisieren
-    let foundLebensDosis = 0;
+    let foundLebensDosis = false;
     if (person.lebensDosis) {
         // Suchen, ob es den DosimeterTyp bereits einmal gibt.
  		person.lebensDosis.forEach(function(lebensDosis) {
@@ -63,11 +67,11 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
                 console.log('Aktualisiere bestehende LebensDosis.');
                 // Addere aktuelle Dosis der bestehenden/passenden LebensDosis
                 lebensDosis.dosis += dosisMessung.dosis;
-                foundLebensDosis = 1;
+                foundLebensDosis = true;
             }
         });
     }
-    if (foundLebensDosis === 0) {
+    if (!foundLebensDosis) {
         console.log('Bestehende/passende LebensDosis nicht gefunden, erstelle neuen Eintrag.');
         const lebensDosis = factory.newConcept(NS, 'LebensDosis');
         lebensDosis.dosimeterTyp = dosimeter.dosimeterTyp;
@@ -83,10 +87,37 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     const dosimeterRegistry = await getParticipantRegistry(NS + '.Dosimeter');
     await dosimeterRegistry.update(dosimeter);
 
-    // Für jede neue Messung einen Event emitten
-    const event = getFactory().newEvent(NS, 'NeueDosisMessung');
-    event.dosisMessung = dosisMessung;
-    emit(event);
+    // Für jede neue Messung einen Event emitten,
+    const neueDosisMessungEvent = getFactory().newEvent(NS, 'NeueDosisMessung');
+    neueDosisMessungEvent.dosisMessung = dosisMessung;
+    emit(neueDosisMessungEvent);
+
+    if (isStrahlenEreignis) {
+        const strahlenEreignisEvent = getFactory().newEvent(NS, 'StrahlenEreignis');
+        strahlenEreignisEvent.dosisMessung = dosisMessung;
+        emit(strahlenEreignisEvent);
+    }
+
+}
+
+/**
+ * Hilfsfunktion, welche prüft, ob ein Strahlenereignis vorliegt.
+ * @param {*} person 
+ * @param {*} dosimeter 
+ * @param {*} jahresDosis 
+ */
+function checkStrahlenEreignis(person, dosimeter, jahresDosis) {
+    // Prüfen, ob ein Strahlenereignis vorliegt.
+    personAlter = curentYear - person.geburtsjahr;
+    if (dosimeter.dosimeterTyp == 'GANZKOERPER') {
+        if (personAlter < 19 && jahresDosis > 6.0) {
+            return true;
+        }
+        if (personAlter >= 19 && jahresDosis > 20.0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
