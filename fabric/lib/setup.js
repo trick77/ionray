@@ -4,8 +4,6 @@
 
 'use strict';
 
-const NS = 'ch.hslu.casblc2018.ionray';
-
 /**
  * Fuer Demozwecke benoetigte Participants/Assets initialisieren.
  * @param {ch.hslu.casblc2018.ionray.SetupDemo} setupDemo - die SetupDemo Transaktion
@@ -13,6 +11,7 @@ const NS = 'ch.hslu.casblc2018.ionray';
  */
 async function setupDemo(setupDemo) {  // eslint-disable-line no-unused-vars
 
+    const NS = 'ch.hslu.casblc2018.ionray';
     const factory = getFactory();
 
     // Die Dosimetriestelle Suva erzeugen.

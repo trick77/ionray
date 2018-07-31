@@ -4,14 +4,14 @@
 
 'use strict';
 
-const NS = 'ch.hslu.casblc2018.ionray';
-
 /**
  * Eine Dosis von einem Dosimeter erhalten.
  * @param {ch.hslu.casblc2018.ionray.DosisMessung} dosisMessung - die DosisMessung Transaktion
  * @transaction
  */
 async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-vars
+
+    const NS = 'ch.hslu.casblc2018.ionray';
 
     const factory = getFactory();
     const dosimeter = dosisMessung.dosimeter;
