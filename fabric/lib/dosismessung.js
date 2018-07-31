@@ -28,34 +28,34 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
     const person = dosisMessung.dosimeter.person;
 
     // JahresDosis aktualisieren
-    const currentYear = new Date(dosisMessung.messZeitpunkt).getFullYear();
+    const aktuellesJahr = new Date(dosisMessung.messZeitpunkt).getFullYear();
     if (person.jahresDosis) {
         let foundJahresDosis = false;
         person.jahresDosis.forEach(function(jahresDosis) {
             if (jahresDosis.jahr == currentYear && jahresDosis.dosimeterTyp == dosimeter.dosimeterTyp) {
-                console.log('Aktualisiere bestehende Jahresdosis für Jahr ' + currentYear);
+                console.log('Aktualisiere bestehende Jahresdosis für Jahr ' + aktuellesJahr);
                 jahresDosis.dosis += dosisMessung.dosis;
-                isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
+                isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis, aktuellesJahr);
                 foundJahresDosis = true;
             }
         });
         if (!foundJahresDosis) {
-            console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
+            console.log('Erstelle JahresDosis für Kombination Jahr ' + aktuellesJahr + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
             const jahresDosis = factory.newConcept(NS, 'JahresDosis');
             jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
             jahresDosis.dosis = dosisMessung.dosis;
-            jahresDosis.jahr = currentYear;
+            jahresDosis.jahr = aktuellesJahr;
             person.jahresDosis.push(jahresDosis);    
-            isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
+            isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis, aktuellesJahr);
         }
     } else {
-        console.log('Erstelle JahresDosis für Kombination Jahr ' + currentYear + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
+        console.log('Erstelle JahresDosis für Kombination Jahr ' + aktuellesJahr + ' und Dosimeter-Typ ' + dosimeter.dosimeterTyp);
         const jahresDosis = factory.newConcept(NS, 'JahresDosis');
         jahresDosis.dosimeterTyp = dosimeter.dosimeterTyp;
         jahresDosis.dosis = dosisMessung.dosis;
-        jahresDosis.jahr = currentYear;
+        jahresDosis.jahr = aktuellesJahr;
         person.jahresDosis = [jahresDosis];
-        isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis);
+        isStrahlenEreignis = checkStrahlenEreignis(person, dosimeter, jahresDosis.dosis, aktuellesJahr);
     } 
 
     // LebensDosis aktualisieren
@@ -106,9 +106,9 @@ async function dosisMessung(dosisMessung) {  // eslint-disable-line no-unused-va
  * @param {*} dosimeter 
  * @param {*} jahresDosis 
  */
-function checkStrahlenEreignis(person, dosimeter, jahresDosis) {
+function checkStrahlenEreignis(person, dosimeter, jahresDosis, aktuellesJahr) {
     // Prüfen, ob ein Strahlenereignis vorliegt.
-    personAlter = curentYear - person.geburtsjahr;
+    personAlter = aktuellesJahr - person.geburtsjahr;
     if (dosimeter.dosimeterTyp == 'GANZKOERPER') {
         if (personAlter < 19 && jahresDosis > 6.0) {
             return true;
