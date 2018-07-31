@@ -29,6 +29,7 @@ participant StrahlenexponiertePerson identified by ahvn13 { 
   o String ahvn13
   o String vorname
   o String nachname
+  o Integer geburtsjahr range=[1918, ]
   // Lebensdosis nach Dosimeter-Typ unterschieden.
   o LebensDosis[] lebensDosis optional
   // JahresDosis nach Dosimeter-Typ unterschieden.
@@ -88,5 +89,9 @@ transaction SetupDemo {
 }
 
 event NeueDosisMessung {
+  o DosisMessung dosisMessung
+}
+
+event StrahlenEreignis {
   o DosisMessung dosisMessung
 }
