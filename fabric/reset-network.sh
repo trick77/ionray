@@ -9,4 +9,5 @@ composer network reset -c admin@ionray-network
 docker system prune -f
 rm ./admin@ionray-network.card
 docker rmi $(docker images |grep 'example')
-../../fabric/fabric-tools/startFabric.sh
+docker volume rm `docker volume ls -q -f dangling=true`
+#../../fabric/fabric-tools/startFabric.sh
