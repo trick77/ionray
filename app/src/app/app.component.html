@@ -15,43 +15,43 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <p class="network-name">ionray-network@1.0.2.bna</p>
-        <p class="navbar-brand">app</p>
+        <p class="navbar-brand">ionray Demo App</p>
       </div>
       <ul class="nav navbar-nav">
         <li class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
             <ul class="dropdown-menu scrollable-menu">
-              
+
             </ul>
         </li>
         <li class="dropdown active">
           <a class="dropdown-toggle" data-toggle="dropdown">Participants</a>
           <ul class="dropdown-menu scrollable-menu">
-            
-            <li><a [routerLink]="['/StrahlenexponiertePerson']">StrahlenexponiertePerson</a></li>
-            
+
+            <li><a [routerLink]="['/StrahlenexponiertePerson']">Strahlenexponierte Personen</a></li>
+
             <li><a [routerLink]="['/Unternehmen']">Unternehmen</a></li>
-            
-            <li><a [routerLink]="['/DosimetrieStelle']">DosimetrieStelle</a></li>
-            
-            <li><a [routerLink]="['/Bundesorgan']">Bundesorgan</a></li>
-            
+
+            <li><a [routerLink]="['/DosimetrieStelle']">Dosimetriestellen</a></li>
+
+            <li><a [routerLink]="['/Bundesorgan']">Bundesorgane</a></li>
+
             <li><a [routerLink]="['/Dosimeter']">Dosimeter</a></li>
-            
+
           </ul>
       </li>
       <li class="dropdown active">
         <a class="dropdown-toggle" data-toggle="dropdown">Transactions</a>
         <ul class="dropdown-menu scrollable-menu">
-          
+
           <li><a [routerLink]="['/DosisMessung']">DosisMessung</a></li>
-          
+
           <li><a [routerLink]="['/SetupDemo']">SetupDemo</a></li>
-          
+
         </ul>
     </li>
       </ul>
     </div>
   </nav>
-  
+
   <router-outlet></router-outlet>

@@ -30,6 +30,7 @@ import { DosimeterComponent } from './Dosimeter/Dosimeter.component';
 
 import { DosisMessungComponent } from './DosisMessung/DosisMessung.component';
 import { SetupDemoComponent } from './SetupDemo/SetupDemo.component';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
   @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SetupDemoComponent } from './SetupDemo/SetupDemo.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+		AngularFontAwesomeModule
   ],
   providers: [
     DataService

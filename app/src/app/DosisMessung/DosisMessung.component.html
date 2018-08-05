@@ -23,57 +23,57 @@
         <div class="modal-body">
 
 
-          
 
-            
+
+
               <div class="form-group text-left">
                 <label for="dosis">dosis</label>
-                
-                  <input formControlName="dosis" type="number" step='any' class="form-control">
-                
-              </div>
-            
-          
 
-            
+                  <input formControlName="Dosis" type="number" step='any' class="form-control">
+
+              </div>
+
+
+
+
               <div class="form-group text-left">
                 <label for="messZeitpunkt">messZeitpunkt</label>
-                
-                  <input formControlName="messZeitpunkt" type="text" class="form-control">
-                
-              </div>
-            
-          
 
-            
+                  <input formControlName="Mess-Zeitpunkt" type="text" class="form-control">
+
+              </div>
+
+
+
+
               <div class="form-group text-left">
                 <label for="dosimeter">dosimeter</label>
-                
-                    <textarea formControlName="dosimeter" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
 
-            
+                    <textarea formControlName="Dosimeter" class="form-control" rows="3"></textarea>
+
+              </div>
+
+
+
+
               <div class="form-group text-left">
                 <label for="transactionId">transactionId</label>
-                
-                  <input formControlName="transactionId" type="text" class="form-control">
-                
-              </div>
-            
-          
 
-            
+                  <input formControlName="transactionId" type="text" class="form-control">
+
+              </div>
+
+
+
+
               <div class="form-group text-left">
                 <label for="timestamp">timestamp</label>
-                
+
                   <input formControlName="timestamp" type="text" class="form-control">
-                
+
               </div>
-            
-          
+
+
 
         </div>
         <div class="modal-footer">
@@ -100,54 +100,54 @@
         <div class="modal-body">
 
 
-          
-            <div class="form-group text-left">
-              <label for="dosis">dosis</label>
 
-              
+            <div class="form-group text-left">
+              <label for="dosis">Dosis</label>
+
+
                 <input [ngModel]="dosis" formControlName="dosis" type="number" step='any' class="form-control">
-              
+
 
             </div>
-          
-            <div class="form-group text-left">
-              <label for="messZeitpunkt">messZeitpunkt</label>
 
-              
+            <div class="form-group text-left">
+              <label for="messZeitpunkt">Mess-Zeitpunkt</label>
+
+
                 <input [ngModel]="messZeitpunkt"formControlName="messZeitpunkt" type="text" class="form-control">
-              
+
 
             </div>
-          
+
             <div class="form-group text-left">
-              <label for="dosimeter">dosimeter</label>
+              <label for="dosimeter">Dosimeter</label>
 
-              
-                
+
+
                   <textarea [ngModel]="dosimeter" formControlName="dosimeter" class="form-control" rows="3"></textarea>
-                
-              
+
+
 
             </div>
-          
+
             <div class="form-group text-left">
               <label for="transactionId">transactionId</label>
 
-              
+
                 <input [ngModel]="transactionId"formControlName="transactionId" type="text" class="form-control">
-              
+
 
             </div>
-          
+
             <div class="form-group text-left">
               <label for="timestamp">timestamp</label>
 
-              
+
                 <input [ngModel]="timestamp"formControlName="timestamp" type="text" class="form-control">
-              
+
 
             </div>
-          
+
 
 
         </div>
@@ -196,10 +196,10 @@
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
         <strong>Error:</strong> {{errorMessage}}
     </div>
-  
+
   <div class="row">
     <div class="col-md-12">
-        <h1 class="transaction-title" id='transactionName'>DosisMessung</h1>
+        <h1 class="transaction-title" id='transactionName'>Dosis-Messung</h1>
         <p class="invoke_cancel" id='invoke_cancel'>Invoke</p>
     </div>
   </div>
@@ -211,32 +211,32 @@
           When invoked, this transaction will have the following attributes:
           <br>
           <ul>
-            
 
-              
+
+
                 <li><span class="attribute"><b>dosis</b></span></li>
-              
-            
 
-              
+
+
+
                 <li><span class="attribute"><b>messZeitpunkt</b></span></li>
-              
-            
 
-              
+
+
+
                 <li><span class="attribute"><b>dosimeter</b></span></li>
-              
-            
 
-              
+
+
+
                 <li><span class="attribute"><b>transactionId</b></span></li>
-              
-            
 
-              
+
+
+
                 <li><span class="attribute"><b>timestamp</b></span></li>
-              
-            
+
+
           </ul>
         </div>
       </div>
@@ -244,4 +244,4 @@
     </div>
   </div>
 </div>
- 
+
