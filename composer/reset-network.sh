@@ -10,4 +10,4 @@ docker system prune -f
 rm ./admin@ionray-network.card
 docker rmi $(docker images |grep 'example')
 docker volume rm `docker volume ls -q -f dangling=true`
-../../fabric/fabric-tools/startFabric.sh
+#../../fabric/fabric-tools/startFabric.sh
