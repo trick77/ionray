@@ -250,7 +250,7 @@
                   <path fill-rule="evenodd" d="M5.5,4.5 L9.5,4.5 L10,4.5 L10,5.5 L9.5,5.5 L5.5,5.5 L5.5,9.5 L5.5,10 L4.5,10 L4.5,9.5 L4.5,5.5 L0.5,5.5 L0,5.5 L0,4.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 L4.5,0 L5.5,0 L5.5,0.5 L5.5,4.5 Z"/>
                 </svg>
             </span>
-          Person erzeugen
+          Person
         </button>
       </div>
     </div>
@@ -303,6 +303,10 @@
 
 								<button (click)="setId(participant.kurzname);" type="button" class="btn btn-delete" data-toggle="modal" data-target="#deleteParticipantModal">
 									<fa name="trash" size="lg"></fa>
+								</button>
+
+								<button (click)="setId(participant.kurzname);" type="button" class="btn btn-delete" data-toggle="modal" data-target="#deleteParticipantModal">
+									<fa name="signal" size="lg"></fa>
 								</button>
 							</td>
             </tr>
